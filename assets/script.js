@@ -20,10 +20,10 @@ function apiCall(cityName){
     dataType: "json",
 
     //Makes second reqest if the first is successful
-    success: function(){
+    success: function(result){
       //Needed variable declaration
-      var lat = response.data[0].latitude;
-      var long = response.data[0].longitude;
+      var lat = result.data[0].latitude;
+      var long = result.data[0].longitude;
 
       //api call to get the weather data
       $.ajax({
