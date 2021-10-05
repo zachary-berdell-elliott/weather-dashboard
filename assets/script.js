@@ -27,9 +27,14 @@ function apiCall(cityName){
 
       //api call to get the weather data
       $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/onecall&lat=" + lat + "&long=" + long + "&lang=en&units=imperial&exclude=hourly,minutely&appid=b088518c8339bc2fb89882ee7de2a221",
+        url: "https://api.openweathermap.org/data/2.5/onecall&lat=" + lat + "&long=" + long + "&lang=en&units=imperial&exclude=hourly,minutely&appid=a2fc3377f48725238fe9514d505f0e03",
     
-        success: function(){
+        success: function(result){
+           //Displays the current weather inforamation
+           $("#current-temp").text(result.temp);
+           $("#current-wind").text(result.wind_speed);
+           $("#current-humidity").text(result.humidity);
+           $("#current-uv").text(result.uvi);
 
            //Creates the weather cards
            for(let i = 0; i<5; i++){

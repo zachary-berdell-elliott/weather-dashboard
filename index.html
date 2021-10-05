@@ -14,26 +14,29 @@
   <header>
     <h1>Weather Dashboard</h1>
   </header>
-  <aside>
-    <h2>Enter a City Name:</h2>
-    <div id="search-bar" aria-label="search bar">
-      <input type="text" id="city-search"></input>
-      <i role="button" class="fas fa-search" id="search-button"></i>
-    </div>
-    <div id="saved-results"></div>
-  </aside>
-  <main>
-    <article id="current-day-weather">
-      <p>Temperature: </p>
-      <p>Wind: </p>
-      <p>Humidity: </p>
-      <p>UV Index: </p>
-    </article>
-    <section id="5-day-forecast">
-      <h3>5 Day Forecast:</h3>
-      <div id="block-holder" class="container d-flex"></div>
-    </section>
-  </main>
+  <div class="d-flex">
+    <aside>
+      <h2>Enter a City Name:</h2>
+      <div id="search-bar" aria-label="search bar">
+        <input type="text" id="city-search"></input>
+        <i role="button" class="fas fa-search" id="search-button"></i>
+      </div>
+      <div id="saved-results"></div>
+    </aside>
+    <main>
+      <article id="current-day-weather">
+        <h2 id="city-name"></h2>
+        <p>Temperature: <span id="current-temp"></span></p>
+        <p>Wind: <span id="current-wind"></span></p>
+        <p>Humidity: <span id="current-humidity"></span></p>
+        <p>UV Index: <span id="current-uv"></span></p>
+      </article>
+      <section id="5-day-forecast">
+        <h3>5 Day Forecast:</h3>
+        <div id="block-holder" class="container d-flex"></div>
+      </section>
+    </main>
+  </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="assets/script.js"></script>
 </body>
