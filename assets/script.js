@@ -27,22 +27,24 @@ function apiCall(cityName){
     
         success: function(result){
            //Displays the current weather inforamation
-           $("#city-name").text(moment().format("(M/DD/yyyy)") + " " + addressName);
-           $("#current-temp").text(result.current.temp);
-           $("#current-wind").text(result.current.wind_speed);
-           $("#current-humidity").text(result.current.humidity);
+           $("#current-title #city-name").text(moment().format("(M/DD/YYYY)") + " " + addressName);
+           $("#current-temp").text(result.current.temp + " °F");
+           $("#current-wind").text(result.current.wind_speed + " MPH");
+           $("#current-humidity").text(result.current.humidity + " %");
            $("#current-uv").text(result.current.uvi);
+           
+           $("#block-holder").empty();
 
            //Creates the weather cards
            for(let i = 0; i<5; i++){
              var dayInfo = result.daily[i + 1];
               //Creates the neccessary elements
-              var weatherCard = $("<div>").addClass("weather-card card").hide();
+              var weatherCard = $("<div>").addClass("weather-card card ml-2").hide();
               var cardDate = $("<h3>").addClass("card-date");
-              var weatherIcon = $("<i>").addClass("weather-icon").attr("src", "http://openweathermap.org/img/w/" + dayInfo.weather[0].icon + ".png");
-              var tempP = $("<p>").addClass("temp-p").text("temp: " + dayInfo.temp.day);
-              var windP = $("<p>").addClass("wind-p").text("wind: " + dayInfo.wind_speed);
-              var humidP = $("<p>").addClass("humid-p").text("humidity: " + dayInfo.humidity + "%");
+              var weatherIcon = $("<img>").addClass("weather-icon").attr("src", "http://openweathermap.org/img/w/" + dayInfo.weather[0].icon + ".png");
+              var tempP = $("<p>").addClass("temp-p").text("temp: " + dayInfo.temp.day + " °F");
+              var windP = $("<p>").addClass("wind-p").text("wind: " + dayInfo.wind_speed + " MPH");
+              var humidP = $("<p>").addClass("humid-p").text("humidity: " + dayInfo.humidity + " %");
               //Appends the neccessary elements
               weatherCard.append(cardDate, weatherIcon, tempP, windP, humidP);
               $("#block-holder").append(weatherCard);
