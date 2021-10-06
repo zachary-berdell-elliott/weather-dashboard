@@ -1,5 +1,28 @@
  const searchButton = $("#search-button");
-//var savedCities = JSON.parse("saved-cities") || [];
+ var savedCities = JSON.parse(localStorage.getItem("saved-cities")) || ["denver"];
+
+ //Adds buttons for each of the saved cities so the user can access just by clicking the button
+ savedCities.forEach(function(i){
+  var savedBlock = $("<div>").addClass("save-block d-flex");
+  var cityBtn = $("<button>").addClass("city-button").text(savedCities[i]);
+  var removeBtn = $("<button>").addClass("remove-button").text("X");
+
+  savedBlock.append(cityBtn, removeBtn);
+
+  //Fetches data for the saved city on click
+  cityBtn.click(function(){
+    cityName = cityBtn.val();
+
+    apiCall(cityName);
+  });
+
+  //Removes the saved city from the list and local storage
+  removeBtn.click(function(){
+    savedCities.splice(i, 1);
+    $(this).parent().remove();
+    citySaver();
+  });
+ });
 
  //Add function to get the neccessary information when the user searches the site.
  searchButton.click(function(){
@@ -26,6 +49,10 @@ function apiCall(cityName){
         dataType: "json",
     
         success: function(result){
+           //creates and appends the weather image. Removes the one that it already there if it exists.
+           $("#current-title img").remove();
+           var currentImage = $("<img>").addClass("current-image").attr("src", "http://openweathermap.org/img/w/" + result.current.weather[0].icon + ".png");
+           $("#current-title").append(currentImage)
            //Displays the current weather inforamation
            $("#current-title #city-name").text(moment().format("(M/DD/YYYY)") + " " + addressName);
            $("#current-temp").text(result.current.temp + " °F");
@@ -33,6 +60,7 @@ function apiCall(cityName){
            $("#current-humidity").text(result.current.humidity + " %");
            $("#current-uv").text(result.current.uvi);
            
+           //Removes the current weather cards to make room for the new ones.
            $("#block-holder").empty();
 
            //Creates the weather cards
@@ -51,13 +79,32 @@ function apiCall(cityName){
               weatherCard.fadeIn("slow");
            } 
 
-            
+           //Saves the city to the saved cities array and local storage and makes sure there isn't a duplicate
+           var notDuplicate = true;
+           savedCities.forEach(function(i){
+            if (addressName !== savedCities[i]){
+              continue;
+            }
+            else {
+              notDuplicate = false;
+              break;
+            }
+           });
+
+           if (notDuplicate) {
+             
+           }
         },
       });
     },
   
     error: function(){
-      alert("Please enter a valid city name or address.")
+      alert("Please enter a valid city name or address and make sure you aren't blocking http requests.")
     }
   });
 }
+
+ //function for saving cities to the local storage
+ function citySaver() {
+    localStorage.setItem(JSON.stringify("saved-cities", savedCities));
+ }
