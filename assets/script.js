@@ -1,5 +1,7 @@
  const searchButton = $("#search-button");
  var savedCities = JSON.parse(localStorage.getItem("saved-cities")) || [];
+ //Hides the main element
+ $("main").hide();
 
  //Adds buttons for each of the saved cities so the user can access just by clicking the button
  savedCities.forEach(function(i){
@@ -61,16 +63,20 @@ function apiCall(cityName){
            $("#current-wind").text(result.current.wind_speed + " MPH");
            $("#current-humidity").text(result.current.humidity + " %");
            $("#current-uv").text(result.current.uvi);
+           $("main").fadeIn("slow");
            
            //Removes the current weather cards to make room for the new ones.
            $("#block-holder").empty();
+           //Adds a current day variable that can be added to so the date displays on the cards
+           var currentDay = parseInt(moment().format("DDD"));
 
            //Creates the weather cards
            for(let i = 0; i<5; i++){
+             var listedDay = currentDay + i + 1;
              var dayInfo = result.daily[i + 1];
               //Creates the neccessary elements
               var weatherCard = $("<div>").addClass("weather-card card ml-2").hide();
-              var cardDate = $("<h3>").addClass("card-date");
+              var cardDate = $("<h3>").addClass("card-date").text(moment(listedDay.toString(), "DDD").format("M/DD/YYYY"));
               var weatherIcon = $("<img>").addClass("weather-icon").attr("src", "http://openweathermap.org/img/w/" + dayInfo.weather[0].icon + ".png");
               var tempP = $("<p>").addClass("temp-p").text("temp: " + dayInfo.temp.day + " °F");
               var windP = $("<p>").addClass("wind-p").text("wind: " + dayInfo.wind_speed + " MPH");
