@@ -8,12 +8,6 @@
    apiCall(cityName);
  });
 
- //outputs data on the dashboard
-
- //create cards that display the weather
-
- //Catch for if the input isn't a valid city
-
 function apiCall(cityName){
   $.ajax({
     url: "http://api.positionstack.com/v1/forward?access_key=5e97c33cfde86ef8a37f80f7a0c802c4&output=json&query=" + cityName + "&limit=1",
@@ -27,14 +21,16 @@ function apiCall(cityName){
 
       //api call to get the weather data
       $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/onecall&lat=" + lat + "&long=" + long + "&lang=en&units=imperial&exclude=hourly,minutely&appid=a2fc3377f48725238fe9514d505f0e03",
+        url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&lang=en&units=imperial&exclude=hourly,minutely&appid=b088518c8339bc2fb89882ee7de2a221",
+        dataType: "json",
     
         success: function(result){
            //Displays the current weather inforamation
-           $("#current-temp").text(result.temp);
-           $("#current-wind").text(result.wind_speed);
-           $("#current-humidity").text(result.humidity);
-           $("#current-uv").text(result.uvi);
+           $("city-name").text(moment().format("(M/DD/yyyy)") + " " + cityName);
+           $("#current-temp").text(result.current.temp);
+           $("#current-wind").text(result.current.wind_speed);
+           $("#current-humidity").text(result.current.humidity);
+           $("#current-uv").text(result.current.uvi);
 
            //Creates the weather cards
            for(let i = 0; i<5; i++){
