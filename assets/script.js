@@ -1,17 +1,17 @@
  const searchButton = $("#search-button");
- var savedCities = JSON.parse(localStorage.getItem("saved-cities")) || ["denver"];
+ var savedCities = JSON.parse(localStorage.getItem("saved-cities")) || [];
 
  //Adds buttons for each of the saved cities so the user can access just by clicking the button
  savedCities.forEach(function(i){
   var savedBlock = $("<div>").addClass("save-block d-flex");
-  var cityBtn = $("<button>").addClass("city-button").text(savedCities[i]);
+  var cityBtn = $("<button>").addClass("city-button").text(i);
   var removeBtn = $("<button>").addClass("remove-button").text("X");
 
   savedBlock.append(cityBtn, removeBtn);
 
   //Fetches data for the saved city on click
   cityBtn.click(function(){
-    cityName = cityBtn.val();
+    cityName = cityBtn.text();
 
     apiCall(cityName);
   });
@@ -20,8 +20,10 @@
   removeBtn.click(function(){
     savedCities.splice(i, 1);
     $(this).parent().remove();
-    citySaver();
+    citySaver(savedCities);
   });
+
+  $("#saved-results").append(savedBlock);
  });
 
  //Add function to get the neccessary information when the user searches the site.
@@ -82,17 +84,14 @@ function apiCall(cityName){
            //Saves the city to the saved cities array and local storage and makes sure there isn't a duplicate
            var notDuplicate = true;
            savedCities.forEach(function(i){
-            if (addressName !== savedCities[i]){
-              continue;
-            }
-            else {
+            if (addressName === savedCities[i]){
               notDuplicate = false;
-              break;
             }
            });
 
            if (notDuplicate) {
-             
+             savedCities.push(addressName);
+             citySaver(savedCities);
            }
         },
       });
@@ -105,6 +104,6 @@ function apiCall(cityName){
 }
 
  //function for saving cities to the local storage
- function citySaver() {
-    localStorage.setItem(JSON.stringify("saved-cities", savedCities));
+ function citySaver(savedCities) {
+    localStorage.setItem("saved-cities", JSON.stringify(savedCities));
  }
