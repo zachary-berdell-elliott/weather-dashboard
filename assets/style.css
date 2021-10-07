@@ -1,1 +1,10 @@
- 
+ h1 {
+     text-align:center;
+     font-size: 350%;
+     padding: 1%;
+     color: cornsilk;
+ }
+
+ header{
+     background: linear-gradient(-45deg, rgb(8, 16, 85) 65%, rgb(20,16,155));
+ }
