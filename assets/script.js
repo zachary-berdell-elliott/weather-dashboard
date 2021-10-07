@@ -45,7 +45,8 @@ function apiCall(cityName){
       //Needed variable declaration
       var lat = result.coord.lat;
       var long = result.coord.lon;
-      var addressName = cityName.charAt(0).toUpperCase() + cityName.slice(1).toLowerCase();
+      //Converts String to the correct casing
+      var addressName = cityName.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ');
 
       //api call to get the weather data
       $.ajax({
