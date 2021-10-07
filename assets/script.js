@@ -90,7 +90,7 @@ function apiCall(cityName){
            //Saves the city to the saved cities array and local storage and makes sure there isn't a duplicate
            var notDuplicate = true;
            savedCities.forEach(function(i){
-            if (addressName === savedCities[i]){
+            if (addressName === i){
               notDuplicate = false;
             }
            });
@@ -104,7 +104,7 @@ function apiCall(cityName){
     },
   
     error: function(){
-      alert("Please enter a valid city name or address and make sure you aren't blocking http requests.")
+      alert("Please enter a valid city name.")
     }
   });
 }
