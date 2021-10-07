@@ -37,15 +37,15 @@
 
 function apiCall(cityName){
   $.ajax({
-    url: "http://api.positionstack.com/v1/forward?access_key=5e97c33cfde86ef8a37f80f7a0c802c4&output=json&query=" + cityName + "&limit=1",
+    url: "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid=b088518c8339bc2fb89882ee7de2a221",
     dataType: "json",
 
     //Makes second reqest if the first is successful
     success: function(result){
       //Needed variable declaration
-      var lat = result.data[0].latitude;
-      var long = result.data[0].longitude;
-      var addressName = result.data[0].name
+      var lat = result.coord.lat;
+      var long = result.coord.lon;
+      var addressName = cityName;
 
       //api call to get the weather data
       $.ajax({
