@@ -5,27 +5,7 @@
 
  //Adds buttons for each of the saved cities so the user can access just by clicking the button
  savedCities.forEach(function(i){
-  var savedBlock = $("<div>").addClass("save-block d-flex");
-  var cityBtn = $("<button>").addClass("city-button").text(i);
-  var removeBtn = $("<button>").addClass("remove-button").text("X");
-
-  savedBlock.append(cityBtn, removeBtn);
-
-  //Fetches data for the saved city on click
-  cityBtn.click(function(){
-    cityName = cityBtn.text();
-
-    apiCall(cityName);
-  });
-
-  //Removes the saved city from the list and local storage
-  removeBtn.click(function(){
-    savedCities.splice(i, 1);
-    $(this).parent().remove();
-    citySaver(savedCities);
-  });
-
-  $("#saved-results").append(savedBlock);
+   savedBlockBuild(i);
  });
 
  //Add function to get the neccessary information when the user searches the site.
@@ -97,6 +77,7 @@ function apiCall(cityName){
            });
 
            if (notDuplicate) {
+             savedBlockBuild(addressName);
              savedCities.push(addressName);
              citySaver(savedCities);
            }
@@ -114,3 +95,28 @@ function apiCall(cityName){
  function citySaver(savedCities) {
     localStorage.setItem("saved-cities", JSON.stringify(savedCities));
  }
+
+ //builds the saved city blocks
+ function savedBlockBuild(savedCity){
+   var savedBlock = $("<div>").addClass("save-block d-flex");
+   var cityBtn = $("<button>").addClass("city-button").text(savedCity);
+   var removeBtn = $("<button>").addClass("remove-button").text("X");
+
+   savedBlock.append(cityBtn, removeBtn);
+
+   //Fetches data for the saved city on click
+   cityBtn.click(function(){
+     cityName = cityBtn.text();
+
+     apiCall(cityName);
+   });
+
+   //Removes the saved city from the list and local storage
+   removeBtn.click(function(){
+     savedCities.splice(savedCities.indexOf(savedCity, 0), 1);
+     $(this).parent().remove();
+     citySaver(savedCities);
+   });
+
+   $("#saved-results").append(savedBlock);
+  }
